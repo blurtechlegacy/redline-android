@@ -6,19 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.*
 import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.view.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import tech.blur.redline.core.MvpBottomSheetDialogFragment
 import tech.blur.redline.R
 
 class BottomNavigationDrawerFragment: MvpBottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)
-        view.button.setOnClickListener { v -> Toast.makeText(context, view.editText.text, Toast.LENGTH_LONG).show() }
+        view.search_button.setOnClickListener { Toast.makeText(context, view.search_edit_text.text, Toast.LENGTH_LONG).show() }
         return view
     }
 
@@ -27,21 +29,9 @@ class BottomNavigationDrawerFragment: MvpBottomSheetDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        navigation_view.setNavigationItemSelectedListener { menuItem ->
-            // Bottom Navigation Drawer menu item clicks
-            when (menuItem.itemId) {
-//                R.id.nav1 -> context!!.toast(getString(R.string.nav1_clicked))
-            }
-            // Add code here to update the UI based on the item selected
-            // For example, swap UI fragments here
-            true
-        }
-
         close_imageview.setOnClickListener {
             this.dismiss()
         }
-
-        disableNavigationViewScrollbars(navigation_view)
 
     }
 
@@ -55,7 +45,7 @@ class BottomNavigationDrawerFragment: MvpBottomSheetDialogFragment() {
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet!!)
             bottomSheetBehavior.setBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    if (slideOffset > 0.5) {
+                    if (slideOffset > 0.1) {
                         close_imageview.visibility = View.VISIBLE
                     } else {
                         close_imageview.visibility = View.GONE
@@ -65,7 +55,7 @@ class BottomNavigationDrawerFragment: MvpBottomSheetDialogFragment() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     when (newState) {
                         BottomSheetBehavior.STATE_HIDDEN-> dismiss()
-//                        else -> close_imageview.visibility = View.GONE
+                        else -> close_imageview.visibility = View.GONE
                     }
                 }
             })
