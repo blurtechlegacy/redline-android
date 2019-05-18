@@ -5,6 +5,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/appBarLayout">
+
+        <androidx.appcompat.widget.Toolbar
+                style="@style/RedLineTheme.ToolBar"
+                app:titleTextColor="#ffffff"
+                android:id="@+id/signup_trip_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:title="Регистрация">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signup_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -67,5 +87,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeWidth="2dp"
+            android:id="@+id/reguser_button"
+            app:strokeColor="@color/colorAccent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Зарегистрироваться"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"/>
 
 </LinearLayout>

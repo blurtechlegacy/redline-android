@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"
+           xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
@@ -17,6 +18,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="RedLineTheme.ToolBar" parent="Widget.AppCompat.Toolbar">
+
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <!--<style name="RedLine.SignInButtom" parent="Widget.MaterialComponents.Button"-->

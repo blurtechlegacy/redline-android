@@ -10,6 +10,7 @@ import com.google.maps.PendingResult
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
 import retrofit2.Retrofit
+import tech.blur.redline.App
 import javax.inject.Inject
 
 @InjectViewState
@@ -23,6 +24,10 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
 
     @Inject
     lateinit var retrofit: Retrofit
+
+    init {
+        App.INSTANCE.getAppComponent().inject(this)
+    }
 
     fun buildRoute() {
         val pointArray: ArrayList<LatLng> = ArrayList()

@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import tech.blur.redline.App
 import tech.blur.redline.core.model.Wrapper
+import tech.blur.redline.core.model.rUser
 import tech.blur.redline.features.signup.api.SignUpApi
 import javax.inject.Inject
 
@@ -30,7 +31,21 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
     var login = ""
     var prefs: ArrayList<String> = ArrayList()
 
-    public fun getPrefs() {
+    fun regUser(){
+        if (name.isNotBlank() && password.isNotBlank() && login.isNotBlank())
+            signUpApi.regUser(rUser(login, name, password, prefs)).enqueue(object : Callback<Void>{
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+            })
+    }
+
+    fun getPrefs() {
         signUpApi.getPrefs().enqueue(object : Callback<Wrapper<ArrayList<String>>> {
             override fun onFailure(call: Call<Wrapper<ArrayList<String>>>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

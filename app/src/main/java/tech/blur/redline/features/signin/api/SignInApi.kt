@@ -5,10 +5,11 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import tech.blur.redline.core.model.User
 import tech.blur.redline.core.model.UserLoginPass
+import tech.blur.redline.core.model.Wrapper
 
 interface SignInApi {
 
-    @POST("auth/")
-    fun authUser(@Body userLoginPass: UserLoginPass): Call<User>
+    @POST("users/auth/")
+    fun authUser(@Body userLoginPass: UserLoginPass): Call<Wrapper<User>>
 
 }
