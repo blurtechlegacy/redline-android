@@ -66,8 +66,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         options.width(5f)
         options.visible(true)
 
+        options.add(nsk)
         options.add(LatLng(55.031103, 82.921267))
-
 
         googleMap.addPolyline(options)
     }
