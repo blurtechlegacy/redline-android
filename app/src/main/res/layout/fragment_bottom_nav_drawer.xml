@@ -5,63 +5,42 @@
                                                    android:id="@+id/navigation_view_layout"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content"
+                                                   android:paddingBottom="32dp"
                                                    app:behavior_hideable="true"
                                                    app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="match_parent"
+    <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="4dp"
-            android:paddingBottom="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2"
-            app:theme="@style/NavigationDrawerStyle" />
-
-    <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="2dip"
-            android:background="#447e7e7e"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" android:layout_marginTop="8dp"/>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:hint="Search something"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/close_imageview"/>
 
     <ImageView
             android:id="@+id/close_imageview"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/baseline_close_black_24"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/button"
-            app:layout_constraintTop_toTopOf="@+id/button"
-            app:layout_constraintEnd_toStartOf="@+id/button"/>
-    <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/search_edit_text"
+            app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
+            app:layout_constraintEnd_toStartOf="@+id/search_button"
             android:layout_marginEnd="8dp"/>
-    <EditText
+    <ImageButton
+            android:background="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:ems="10"
-            android:id="@+id/editText" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:srcCompat="@drawable/ic_search_accent_24dp"
+            android:id="@+id/search_button"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/search_edit_text"
+            app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
