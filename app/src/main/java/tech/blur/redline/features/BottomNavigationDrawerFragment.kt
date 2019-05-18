@@ -8,20 +8,17 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.internal.NavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.*
 import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.view.*
-import kotlinx.android.synthetic.main.fragment_bottomsheet.*
-import kotlinx.android.synthetic.main.fragment_bottomsheet.navigation_view
-import tech.blur.redline.MvpBottomSheetDialogFragment
+import tech.blur.redline.core.MvpBottomSheetDialogFragment
 import tech.blur.redline.R
 
 class BottomNavigationDrawerFragment: MvpBottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)
-        view.button.setOnClickListener { v -> Toast.makeText(context, v.editText.text, Toast.LENGTH_LONG) }
+        view.button.setOnClickListener { v -> Toast.makeText(context, view.editText.text, Toast.LENGTH_LONG).show() }
         return view
     }
 

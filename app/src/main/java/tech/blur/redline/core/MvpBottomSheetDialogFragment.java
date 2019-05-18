@@ -1,4 +1,4 @@
-package tech.blur.redline;
+package tech.blur.redline.core;
 
 import android.app.Dialog;
 import android.os.Bundle;
