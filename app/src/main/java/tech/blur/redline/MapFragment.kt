@@ -3,8 +3,8 @@ package tech.blur.redline
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : androidx.fragment.app.Fragment(), OnMapReadyCallback {
 
     lateinit var mMapView: MapView
     private lateinit var googleMap: GoogleMap
