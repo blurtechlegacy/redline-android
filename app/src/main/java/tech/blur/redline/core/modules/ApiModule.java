@@ -11,8 +11,7 @@ import javax.inject.Singleton;
 
 @Module
 public class ApiModule {
-    private static final String BASE_URL = "https://api.tripple.me/";
-    private static final String FILES_URL = "https://fs.tripple.me/";
+    private static final String BASE_URL = "http://api.redline.blur.tech";
 
     public ApiModule() {
     }

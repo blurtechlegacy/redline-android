@@ -7,11 +7,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import tech.blur.redline.App
+import tech.blur.redline.core.model.Wrapper
 import tech.blur.redline.features.signup.api.SignUpApi
 import javax.inject.Inject
 
 @InjectViewState
-class SignUpPresenter: MvpPresenter<SingUpView>() {
+class SignUpPresenter : MvpPresenter<SingUpView>() {
 
 
     @Inject
@@ -29,14 +30,18 @@ class SignUpPresenter: MvpPresenter<SingUpView>() {
     var login = ""
     var prefs: ArrayList<String> = ArrayList()
 
-    public fun getPrefs(){
-        signUpApi.getPrefs().enqueue(object : Callback<ArrayList<String>>{
-            override fun onFailure(call: Call<ArrayList<String>>, t: Throwable) {
+    public fun getPrefs() {
+        signUpApi.getPrefs().enqueue(object : Callback<Wrapper<ArrayList<String>>> {
+            override fun onFailure(call: Call<Wrapper<ArrayList<String>>>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
-                viewState.showPrefsList(response.body()!!)
+            override fun onResponse(
+                call: Call<Wrapper<ArrayList<String>>>,
+                response: Response<Wrapper<ArrayList<String>>>
+            ) {
+                if (response.body() != null)
+                    viewState.showPrefsList(response.body()!!.data)
             }
 
         })

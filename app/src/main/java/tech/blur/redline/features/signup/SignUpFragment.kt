@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.fragment_signup.view.*
 import tech.blur.redline.R
@@ -13,7 +14,7 @@ import tech.blur.redline.features.BaseFragment
 
 class SignUpFragment: BaseFragment(), SingUpView{
 
-    lateinit var prefsList: ArrayList<String>
+    var prefsList = ArrayList<String>()
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter
@@ -53,9 +54,19 @@ class SignUpFragment: BaseFragment(), SingUpView{
 
     override fun showPrefsList(list: ArrayList<String>) {
         prefsList.addAll(list)
-        //list.forEach { prefsGroup. }
+        list.forEach {
+            val chip = Chip(prefsGroup.context)
+            chip.text = it
+            chip.isClickable = true
+            chip.isCheckable = true
+            //TODO Color state list for the chip
+            prefsGroup.addView(chip) }
     }
 
     override fun getLayoutID() = R.layout.fragment_signup
+
+    companion object {
+        fun newInstance() = SignUpFragment()
+    }
 
 }
