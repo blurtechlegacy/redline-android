@@ -88,7 +88,7 @@ class SignUpFragment : BaseFragment(), SingUpView {
     override fun onSignUpComplete() {
         activity!!.supportFragmentManager
             .beginTransaction()
-            .replace(main_container.id, MainFlowFragment.newInstance(), "MAIN_FLOW_FRAGMENT")
+            .replace(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FLOW_FRAGMENT")
             .commit()
     }
     companion object {
