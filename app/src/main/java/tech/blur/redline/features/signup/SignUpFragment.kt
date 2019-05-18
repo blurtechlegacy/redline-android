@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_signin.view.*
 import kotlinx.android.synthetic.main.fragment_signup.view.*
 import tech.blur.redline.R
 import tech.blur.redline.core.DefaultTextWatcher
 import tech.blur.redline.features.BaseFragment
+import tech.blur.redline.features.MainFlowFragment
 
 class SignUpFragment : BaseFragment(), SingUpView {
 
@@ -47,7 +50,15 @@ class SignUpFragment : BaseFragment(), SingUpView {
             }
         })
 
-
+        v.reguser_button.setOnClickListener {
+            run {
+                val prefList: ArrayList<String> = ArrayList()
+                for (i: Int in 0 until prefsGroup.childCount)
+                    if ((prefsGroup.getChildAt(i) as Chip).isChecked)
+                        prefList.add(((prefsGroup.getChildAt(i) as Chip).text.toString()))
+                presenter.regUser(prefList)
+            }
+        }
 
         return v
     }
@@ -63,10 +74,10 @@ class SignUpFragment : BaseFragment(), SingUpView {
             prefsGroup.addView(chip)
         }
 //        prefsGroup.setOnCheckedChangeListener { group, checkedId ->
-//            if (!presenter.prefs.contains((group.getChildAt(checkedId) as Chip).text.toString()))
-//                presenter.prefs.add((group.getChildAt(checkedId) as Chip).text.toString())
-//            else {
-//                presenter.prefs.remove((group.getChildAt(checkedId) as Chip).text.toString())
+//            if (!presenter.prefsTags.contains((group.getChildAt(checkedId) as Chip).text.toString())) {
+//                presenter.prefsTags.add((group.getChildAt(checkedId) as Chip).text.toString())
+//            } else {
+//                presenter.prefsTags.remove((group.getChildAt(checkedId) as Chip).text.toString())
 //            }
 //        }
 
@@ -74,8 +85,15 @@ class SignUpFragment : BaseFragment(), SingUpView {
 
     override fun getLayoutID() = R.layout.fragment_signup
 
+    override fun onSignUpComplete() {
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FLOW_FRAGMENT")
+            .commit()
+    }
     companion object {
         fun newInstance() = SignUpFragment()
+
     }
 
 }

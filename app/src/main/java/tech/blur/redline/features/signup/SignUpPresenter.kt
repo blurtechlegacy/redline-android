@@ -1,5 +1,6 @@
 package tech.blur.redline.features.signup
 
+import android.content.SharedPreferences
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import retrofit2.Call
@@ -7,6 +8,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import tech.blur.redline.App
+import tech.blur.redline.core.PreferencesApi
+import tech.blur.redline.core.model.User
 import tech.blur.redline.core.model.Wrapper
 import tech.blur.redline.core.model.rUser
 import tech.blur.redline.features.signup.api.SignUpApi
@@ -19,6 +22,10 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
     @Inject
     lateinit var retrofit: Retrofit
 
+    @Inject
+    lateinit var prefs: SharedPreferences
+
+
     private val signUpApi: SignUpApi
 
     init {
@@ -29,17 +36,17 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
     var name = ""
     var password = ""
     var login = ""
-    var prefs: ArrayList<String> = ArrayList()
 
-    fun regUser(){
+    fun regUser(prefsTags: ArrayList<String> = ArrayList()){
         if (name.isNotBlank() && password.isNotBlank() && login.isNotBlank())
-            signUpApi.regUser(rUser(login, name, password, prefs)).enqueue(object : Callback<Void>{
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            signUpApi.regUser(rUser(login, name, password, prefsTags)).enqueue(object : Callback<Wrapper<User>>{
+                override fun onFailure(call: Call<Wrapper<User>>, t: Throwable) {
+
                 }
 
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                override fun onResponse(call: Call<Wrapper<User>>, response: Response<Wrapper<User>>) {
+                    PreferencesApi.setUser(prefs, response.body()!!.data)
+                    viewState.onSignUpComplete()
                 }
 
             })

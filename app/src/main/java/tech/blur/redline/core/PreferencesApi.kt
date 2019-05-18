@@ -7,7 +7,7 @@ import tech.blur.redline.core.model.User
 
 class PreferencesApi {
     companion object {
-        val sharedPreferencesName = "tripple.me.prefs"
+        val sharedPreferencesName = "tripple.me.prefsTags"
 
         enum class PrefNames { USER }
 
@@ -15,7 +15,7 @@ class PreferencesApi {
             val gson = Gson()
             val jsonRoot = JSONObject(prefs.getString(Companion.PrefNames.USER.name, null))
 
-            return gson.fromJson(jsonRoot.toString(), User::class.java).id
+            return gson.fromJson(jsonRoot.toString(), User::class.java)._id
         }
 
         fun setUser(prefs: SharedPreferences, user: User) {
