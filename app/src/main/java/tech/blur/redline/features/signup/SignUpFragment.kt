@@ -12,7 +12,7 @@ import tech.blur.redline.R
 import tech.blur.redline.core.DefaultTextWatcher
 import tech.blur.redline.features.BaseFragment
 
-class SignUpFragment: BaseFragment(), SingUpView{
+class SignUpFragment : BaseFragment(), SingUpView {
 
     var prefsList = ArrayList<String>()
 
@@ -29,19 +29,19 @@ class SignUpFragment: BaseFragment(), SingUpView{
 
         prefsGroup = v.prefs_group
 
-        v.edit_signup_name.addTextChangedListener(object : DefaultTextWatcher(){
+        v.edit_signup_name.addTextChangedListener(object : DefaultTextWatcher() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 presenter.name = s!!.toString()
             }
         })
 
-        v.edit_signup_password.addTextChangedListener(object : DefaultTextWatcher(){
+        v.edit_signup_password.addTextChangedListener(object : DefaultTextWatcher() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 presenter.password = s!!.toString()
             }
         })
 
-        v.edit_signup_login.addTextChangedListener(object : DefaultTextWatcher(){
+        v.edit_signup_login.addTextChangedListener(object : DefaultTextWatcher() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 presenter.login = s!!.toString()
             }
@@ -60,7 +60,16 @@ class SignUpFragment: BaseFragment(), SingUpView{
             chip.isClickable = true
             chip.isCheckable = true
             //TODO Color state list for the chip
-            prefsGroup.addView(chip) }
+            prefsGroup.addView(chip)
+        }
+//        prefsGroup.setOnCheckedChangeListener { group, checkedId ->
+//            if (!presenter.prefs.contains((group.getChildAt(checkedId) as Chip).text.toString()))
+//                presenter.prefs.add((group.getChildAt(checkedId) as Chip).text.toString())
+//            else {
+//                presenter.prefs.remove((group.getChildAt(checkedId) as Chip).text.toString())
+//            }
+//        }
+
     }
 
     override fun getLayoutID() = R.layout.fragment_signup
