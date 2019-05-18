@@ -3,6 +3,7 @@ package tech.blur.redline.features.map
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -21,13 +22,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.maps.GeoApiContext
 import com.google.maps.android.PolyUtil
 import com.google.maps.model.DirectionsResult
 import kotlinx.android.synthetic.main.fragment_map.view.*
 import tech.blur.redline.R
+import tech.blur.redline.core.model.Route
 import tech.blur.redline.features.BaseFragment
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
@@ -44,10 +49,11 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     lateinit var presenter: MapPresenter
 
     lateinit var mMapView: MapView
-    lateinit var cp: ChipGroup
+    lateinit var routeChips: ChipGroup
     private lateinit var googleMap: GoogleMap
     private var longitude: Double = 0.0
     private var latitude: Double = 0.0
+    val routes:ArrayList<Route> = ArrayList()
 
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var geoApiContext: GeoApiContext
@@ -60,13 +66,15 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
         mMapView.onResume() // needed to get the map to display immediately
 
-        cp = rootView.chip_group
+        routeChips = rootView.chip_group
 
         try {
             MapsInitializer.initialize(activity!!.applicationContext)
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        //rootView.
 
         geoApiContext = GeoApiContext.Builder()
             .apiKey("AIzaSyDVsJx-Hyq6w4laps9vUcA1gbq-mWLtH78")
@@ -86,6 +94,16 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
 
         return rootView
+    }
+
+    private fun getCity() {
+        val gcd = Geocoder(context, Locale.getDefault())
+        val addresses = gcd.getFromLocation(presenter.latitude, presenter.longitude, 1)
+        if (addresses.size > 0) {
+            presenter.city = addresses[0].locality
+            presenter.downloadRoutes()
+            //System.out.println(addresses[0].locality)
+        }
     }
 
     override fun getLayoutID() = R.layout.fragment_map
@@ -116,11 +134,13 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
 
 
-        cp.setOnCheckedChangeListener { group, checkedId ->
-            run {
-                presenter.buildRoute()
-            }
-        }
+
+//        routeChips.setOnCheckedChangeListener { group, checkedId ->
+//            run {
+//
+//                presenter.buildRoute(0)
+//            }
+//        }
 
 
         // googleMap.addPolyline(options)
@@ -164,11 +184,30 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
             presenter.longitude = location.longitude
             presenter.latitude = location.latitude
 
+            getCity()
+
             //moving the map to location
             moveMap()
         }
     }
 
+    override fun setRoutsChip(list: ArrayList<Route>) {
+        list.forEach {
+            val chip = Chip(routeChips.context)
+            chip.text = it.name
+            chip.isClickable = true
+            chip.isCheckable = true
+            //TODO Color state list for the chip
+            routeChips.addView(chip)
+        }
+
+        routeChips.setOnCheckedChangeListener {_,checkedId ->
+            run {
+                presenter.buildRoute(checkedId-1)
+            }
+        }
+
+    }
 
     override fun onMyLocationButtonClick(): Boolean {
         Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT).show()
