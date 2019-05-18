@@ -2,12 +2,10 @@ package tech.blur.redline.features
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
-import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.view.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import tech.blur.redline.R
 import tech.blur.redline.features.map.MapFragment
+import tech.blur.redline.features.profile.ProfileFragment
 
 class MainFlowFragment : BaseFragment() {
 
