@@ -3,7 +3,6 @@ package tech.blur.redline.features
 import android.os.Bundle
 import tech.blur.redline.R
 import tech.blur.redline.features.map.MapFragment
-import tech.blur.redline.features.signin.SignInFragment
 
 class MainActivity : BaseActivity() {
 
@@ -12,7 +11,7 @@ class MainActivity : BaseActivity() {
         setContentView(getLayoutId())
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_container, SignInFragment.newInstance(), "MAP")
+            .add(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FRAGMENT_FLOW")
             .commit()
 
     }
