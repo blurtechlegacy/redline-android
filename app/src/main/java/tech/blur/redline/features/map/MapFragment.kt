@@ -12,18 +12,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
-import com.google.maps.DirectionsApi
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.chip.ChipGroup
 import com.google.maps.GeoApiContext
-import com.google.maps.PendingResult
 import com.google.maps.android.PolyUtil
 import com.google.maps.model.DirectionsResult
-import com.google.maps.model.TravelMode
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.fragment_map.view.*
 import tech.blur.redline.R
 import tech.blur.redline.features.BaseFragment
@@ -39,7 +40,11 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     GoogleMap.OnMapLongClickListener,
     GoogleMap.OnMarkerClickListener {
 
+    @InjectPresenter
+    lateinit var presenter: MapPresenter
+
     lateinit var mMapView: MapView
+    lateinit var cp: ChipGroup
     private lateinit var googleMap: GoogleMap
     private var longitude: Double = 0.0
     private var latitude: Double = 0.0
@@ -55,6 +60,8 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
         mMapView.onResume() // needed to get the map to display immediately
 
+        cp = rootView.chip_group
+
         try {
             MapsInitializer.initialize(activity!!.applicationContext)
         } catch (e: Exception) {
@@ -64,13 +71,15 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         geoApiContext = GeoApiContext.Builder()
             .apiKey("AIzaSyDVsJx-Hyq6w4laps9vUcA1gbq-mWLtH78")
             .build()
-
+        presenter.geoApiContext = geoApiContext
         googleApiClient = GoogleApiClient.Builder(context!!)
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API)
             .build()
         googleApiClient.connect()
+
+
 
         mMapView.getMapAsync(this)
 
@@ -105,28 +114,18 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
             getCurrentLocation()
         }
 
-        // For dropping a marker at a point on the Map
-        val nsk = LatLng(55.025331, 82.913682)
 
 
-        val apiRequest = DirectionsApi.newRequest(geoApiContext)
-        apiRequest.origin(com.google.maps.model.LatLng(nsk.latitude, nsk.longitude))
-        apiRequest.destination(com.google.maps.model.LatLng(55.031103, 82.921267))
-        apiRequest.mode(TravelMode.WALKING) //set travelling mode
-
-        apiRequest.setCallback(object : PendingResult.Callback<DirectionsResult> {
-            override fun onFailure(e: Throwable?) {
-                e!!.printStackTrace()
+        cp.setOnCheckedChangeListener { group, checkedId ->
+            run {
+                presenter.buildRoute()
             }
+        }
 
-            override fun onResult(result: DirectionsResult?) {
-                addPolyline(result!!, googleMap)
-            }
-
-        })
 
         // googleMap.addPolyline(options)
     }
+
 
     private fun moveMap() {
         /**
@@ -134,7 +133,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
          * adding marker to map
          * move the camera with animation
          */
-        val latLng = LatLng(latitude, longitude)
+        val latLng = LatLng(presenter.latitude, presenter.longitude)
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(18f))
@@ -162,8 +161,8 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         val location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient)
         if (location != null) {
             //Getting longitude and latitude
-            longitude = location.longitude
-            latitude = location.latitude
+            presenter.longitude = location.longitude
+            presenter.latitude = location.latitude
 
             //moving the map to location
             moveMap()
@@ -205,13 +204,18 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         googleMap.clear()
     }
 
-    private fun addPolyline(results: DirectionsResult, mMap: GoogleMap) {
+    override fun addPolyline(results: DirectionsResult, dest: LatLng) {
 
         val mainHandler = Handler(context!!.mainLooper)
 
         mainHandler.post {
+            googleMap.addMarker(MarkerOptions().position(dest).draggable(false))
             val decodedPath = PolyUtil.decode(results.routes[0].overviewPolyline.encodedPath)
-            mMap.addPolyline(PolylineOptions().addAll(decodedPath))
+            val p = PolylineOptions()
+                .addAll(decodedPath)
+                .color(Color.RED)
+
+            googleMap.addPolyline(p)
         }
     }
 
@@ -225,8 +229,8 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
     override fun onMarkerDragEnd(marker: Marker) {
         // getting the Co-ordinates
-        latitude = marker.position.latitude
-        longitude = marker.position.longitude
+        presenter.latitude = marker.position.latitude
+        presenter.longitude = marker.position.longitude
 
         moveMap()
     }

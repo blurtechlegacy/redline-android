@@ -12,7 +12,7 @@ class MainActivity : BaseActivity() {
         setContentView(getLayoutId())
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_container, MapFragment.newInstance(), "MAIN_FRAGMENT_FLOW")
+            .add(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FRAGMENT_FLOW")
             .commit()
 
     }
