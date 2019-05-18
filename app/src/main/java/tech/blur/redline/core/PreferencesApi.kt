@@ -7,7 +7,7 @@ import tech.blur.redline.core.model.User
 
 class PreferencesApi {
     companion object {
-        val sharedPreferencesName = "tripple.me.prefs"
+        val sharedPreferencesName = "tripple.me.prefsTags"
 
         enum class PrefNames { USER }
 
