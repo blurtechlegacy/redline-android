@@ -3,6 +3,7 @@ package tech.blur.redline.features
 import android.os.Bundle
 import tech.blur.redline.R
 import tech.blur.redline.features.map.MapFragment
+import tech.blur.redline.features.signup.SignUpFragment
 
 class MainActivity : BaseActivity() {
 

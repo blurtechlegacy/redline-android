@@ -11,6 +11,7 @@ class MainFlowFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)
+        setHasOptionsMenu(true)
         (activity as MainActivity).setSupportActionBar(view.bottom_app_bar)
         childFragmentManager.beginTransaction()
             .add(getContainerID(), MapFragment.newInstance(), "MAP")
@@ -33,7 +34,7 @@ class MainFlowFragment : BaseFragment() {
                 bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
             }
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun getLayoutID(): Int = R.layout.fragment_main
