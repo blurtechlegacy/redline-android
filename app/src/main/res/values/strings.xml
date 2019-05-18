@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RedLine</string>
+    <string name="SHARED_PREFS">"blur.tech.prefs"</string>
 </resources>
