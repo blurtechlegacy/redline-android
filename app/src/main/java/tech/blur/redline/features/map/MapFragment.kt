@@ -53,7 +53,11 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     private lateinit var googleMap: GoogleMap
     private var longitude: Double = 0.0
     private var latitude: Double = 0.0
-    val routes:ArrayList<Route> = ArrayList()
+    val routes: ArrayList<Route> = ArrayList()
+    private var init = false
+
+
+    private var selectedChip: Int = -1
 
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var geoApiContext: GeoApiContext
@@ -101,7 +105,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         val addresses = gcd.getFromLocation(presenter.latitude, presenter.longitude, 1)
         if (addresses.size > 0) {
             presenter.city = addresses[0].locality
-            presenter.downloadRoutes()
+            if (!init) presenter.downloadRoutes()
             //System.out.println(addresses[0].locality)
         }
     }
@@ -124,15 +128,13 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         } else {
             googleMap.isMyLocationEnabled = true
             googleMap.setOnMyLocationButtonClickListener(this)
-            googleMap.setOnMyLocationClickListener(this)
-            googleMap.setOnMapClickListener(this)
-            googleMap.setOnMapLongClickListener(this)
+            //googleMap.setOnMyLocationClickListener(this)
+            //googleMap.setOnMapClickListener(this)
+            //googleMap.setOnMapLongClickListener(this)
             googleMap.setOnMarkerClickListener(this)
-            googleMap.setOnMarkerDragListener(this)
+            //googleMap.setOnMarkerDragListener(this)
             getCurrentLocation()
         }
-
-
 
 
 //        routeChips.setOnCheckedChangeListener { group, checkedId ->
@@ -201,18 +203,20 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
             routeChips.addView(chip)
         }
 
-        routeChips.setOnCheckedChangeListener {_,checkedId ->
+        routeChips.setOnCheckedChangeListener { _, checkedId ->
             run {
-                presenter.buildRoute(checkedId-1)
+                if (checkedId > 0) {
+                    selectedChip = checkedId
+                    presenter.buildRoute(checkedId - 1)
+                } else{
+                    googleMap.clear()
+                }
             }
         }
 
     }
 
     override fun onMyLocationButtonClick(): Boolean {
-        Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT).show()
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
         getCurrentLocation()
         return false
 

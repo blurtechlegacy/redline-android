@@ -43,7 +43,7 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
         routeApi = retrofit.create(RouteApi::class.java)
     }
 
-    fun downloadRoutes(){
+    fun downloadRoutes() {
         routeApi.getRoutes(city).enqueue(object : Callback<Wrapper<ArrayList<Route>>> {
             override fun onFailure(call: Call<Wrapper<ArrayList<Route>>>, t: Throwable) {
 
