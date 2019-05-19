@@ -1,6 +1,7 @@
 package tech.blur.redline.features.map
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.common.api.GoogleApiClient
@@ -16,7 +17,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import tech.blur.redline.App
 import tech.blur.redline.core.PreferencesApi
-import tech.blur.redline.core.model.CustomRouteRequestBody
 import tech.blur.redline.core.model.Route
 import tech.blur.redline.core.model.Showplace
 import tech.blur.redline.core.model.Wrapper
@@ -54,7 +54,7 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
     fun downloadRoutes() {
         routeApi.getRoutes(city).enqueue(object : Callback<Wrapper<ArrayList<Route>>> {
             override fun onFailure(call: Call<Wrapper<ArrayList<Route>>>, t: Throwable) {
-
+                Log.d("sd", "asd")
             }
 
             override fun onResponse(
@@ -72,22 +72,21 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
 
     fun buildCustomRoute() {
         routeApi.getCustomRoute(
-            CustomRouteRequestBody(
-                city,
-                LatLng(latitude, longitude),
-                PreferencesApi.getUser(prefs)!!._id
-            )
-        ).enqueue(object : Callback<Wrapper<ArrayList<Showplace>>> {
-            override fun onFailure(call: Call<Wrapper<ArrayList<Showplace>>>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            PreferencesApi.getUser(prefs)!!._id,
+            city,
+            latitude,
+            longitude
+        ).enqueue(object : Callback<ArrayList<Showplace>> {
+            override fun onFailure(call: Call<ArrayList<Showplace>>, t: Throwable) {
+                t.printStackTrace()
             }
 
             override fun onResponse(
-                call: Call<Wrapper<ArrayList<Showplace>>>,
-                response: Response<Wrapper<ArrayList<Showplace>>>
+                call: Call<ArrayList<Showplace>>,
+                response: Response<ArrayList<Showplace>>
             ) {
                 if (response.body() != null) {
-                    customPointArray = response.body()!!.data
+                    customPointArray = response.body()!!
                     getRoute(customPointArray, LatLng(latitude, longitude))
                     viewState.sendRoute((Route("123", "Свой маршрут", customPointArray)))
                 }

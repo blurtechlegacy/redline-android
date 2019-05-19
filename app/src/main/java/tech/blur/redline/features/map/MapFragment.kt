@@ -116,7 +116,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
         // For showing a move to my location button
 
-        val permList = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+        val permList = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET)
 
         ActivityCompat.requestPermissions(activity!!, permList, 1)
 
