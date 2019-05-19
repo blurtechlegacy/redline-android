@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
@@ -17,32 +19,44 @@ class ProfileFragment : BaseFragment() {
 
     lateinit var user: User
     lateinit var prefsGroup: ChipGroup
+    lateinit var nameTextView: TextView
+    lateinit var nicknameView: TextView
+    lateinit var nameEditText: EditText
+    lateinit var loginEditText: EditText
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)
+
+        nameTextView = view.name_text_view
+        nicknameView = view.nickname_text_view
+        nameEditText = view.edit_profile_name
+        loginEditText = view.edit_profile_login
+        prefsGroup = view.prefs_group
+
         val bundle = this.arguments
         if (bundle != null) {
             val jsonString = bundle.getString("User")
             user = Gson().fromJson(jsonString, User::class.java)
             showUser()
         }
-        prefsGroup = view.prefs_group
+
 
         return view
     }
 
     private fun showUser() {
-        name_text_view.text = user.name
-        nickname_text_view.text = user.login
+        nameTextView.text = user.name
+        nicknameView.text = user.login
 
-        edit_profile_name.setText(user.name)
-        edit_profile_login.setText(user.login)
+        nameEditText.setText(user.name)
+        loginEditText.setText(user.login)
 
         user.preferences.forEach {
             val chip = Chip(prefsGroup.context)
             chip.text = it
-            chip.isClickable = true
-            chip.isCheckable = true
+            //chip.isClickable = true
+            //chip.isCheckable = true
             //TODO Color state list for the chip
             prefsGroup.addView(chip)
         }
@@ -52,7 +66,7 @@ class ProfileFragment : BaseFragment() {
     override fun getLayoutID(): Int = R.layout.fragment_profile
 
     companion object {
-        fun newInstance(user: User) : ProfileFragment {
+        fun newInstance(user: User): ProfileFragment {
             val profileFragment = ProfileFragment()
             val bundle = Bundle()
             bundle.putString("User", Gson().toJson(user))
