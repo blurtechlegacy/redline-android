@@ -104,7 +104,6 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
                 init = true
                 presenter.downloadRoutes()
             }
-            //System.out.println(addresses[0].locality)
         }
     }
 
@@ -165,7 +164,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     }
 
     private fun getCurrentLocation() {
-        googleMap.clear()
+        //googleMap.clear()
         if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION)
