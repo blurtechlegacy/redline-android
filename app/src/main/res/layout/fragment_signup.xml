@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/appBarLayout">
+
+        <androidx.appcompat.widget.Toolbar
+                style="@style/RedLineTheme.ToolBar"
+                app:titleTextColor="#ffffff"
+                android:id="@+id/signup_trip_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:title="Регистрация">
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput_signup_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_signup_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Имя"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput_signup_login"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_signup_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Логин"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput_signup_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_signup_password"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Пароль"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+            android:text="Ваши предпочтения:"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <com.google.android.material.chip.ChipGroup
+            app:lineSpacing="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/prefs_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeWidth="2dp"
+            android:id="@+id/reguser_button"
+            app:strokeColor="@color/colorAccent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Зарегистрироваться"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"/>
+
+</LinearLayout>
