@@ -6,6 +6,7 @@ import tech.blur.redline.core.modules.ApiModule;
 import tech.blur.redline.core.modules.SharedPreferencesModule;
 import tech.blur.redline.features.MainFlowFragment;
 import tech.blur.redline.features.map.MapPresenter;
+import tech.blur.redline.features.profile.ProfileFragment;
 import tech.blur.redline.features.signin.SignInPresenter;
 import tech.blur.redline.features.signup.SignUpPresenter;
 
@@ -22,5 +23,7 @@ public interface AppComponent {
     void inject(MapPresenter mapPresenter);
 
     void inject(MainFlowFragment mainFlowFragment);
+
+    void inject(@NotNull ProfileFragment profileFragment);
 }
 
