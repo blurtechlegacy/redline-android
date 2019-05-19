@@ -104,7 +104,7 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
                     pointArray[0].geo[0],
                     pointArray[0].geo[1]
                 )
-                viewState.addPolyline(result!!, latLng)
+                viewState.addPolyline(result!!, pointArray[0])
 //                if (pointArray.indexOf(origin) != pointArray.size - 2)
                 getRoute(
                     pointArray,
@@ -137,7 +137,7 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
                     pointArray[pointArray.indexOf(origin) + 1].geo[0],
                     pointArray[pointArray.indexOf(origin) + 1].geo[1]
                 )
-                viewState.addPolyline(result!!, latLng)
+                viewState.addPolyline(result!!, pointArray[pointArray.indexOf(origin) + 1])
                 if (pointArray.indexOf(origin) != pointArray.size - 2) getRoute(
                     pointArray,
                     pointArray[pointArray.indexOf(origin) + 1]
