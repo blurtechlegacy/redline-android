@@ -75,8 +75,6 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
             e.printStackTrace()
         }
 
-        //rootView.
-
         geoApiContext = GeoApiContext.Builder()
             .apiKey("AIzaSyDVsJx-Hyq6w4laps9vUcA1gbq-mWLtH78")
             .build()

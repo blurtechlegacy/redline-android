@@ -65,13 +65,14 @@
             android:layout_marginTop="16dp">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_signup_password"
+                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Пароль"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-            android:text="Ваши предпотения:"
+            android:text="Ваши предпочтения:"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"

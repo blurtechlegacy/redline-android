@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import tech.blur.redline.App
 import tech.blur.redline.R
@@ -59,6 +59,10 @@ class ProfileFragment : BaseFragment() {
             }
         }
 
+        view.button_edit.setOnClickListener {
+            Toast.makeText(context, "Эта функция пока недоступна", Toast.LENGTH_LONG).show()
+        }
+
         val bundle = this.arguments
         if (bundle != null) {
             val jsonString = bundle.getString("User")
@@ -82,6 +86,7 @@ class ProfileFragment : BaseFragment() {
             chip.text = it
             //chip.isClickable = true
             //chip.isCheckable = true
+            chip.isEnabled = false
             //TODO Color state list for the chip
             prefsGroup.addView(chip)
         }
