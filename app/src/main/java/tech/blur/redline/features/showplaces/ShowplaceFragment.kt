@@ -1,4 +1,4 @@
-package tech.blur.redline.features
+package tech.blur.redline.features.showplaces
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_showplace.view.*
 import tech.blur.redline.R
 import tech.blur.redline.core.model.Showplace
+import tech.blur.redline.features.BaseFragment
 
 class ShowplaceFragment : BaseFragment() {
 

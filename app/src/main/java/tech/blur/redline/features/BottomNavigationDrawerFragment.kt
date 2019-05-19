@@ -3,10 +3,12 @@ package tech.blur.redline.features
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.internal.NavigationMenuView
@@ -17,9 +19,9 @@ import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.view.*
 import tech.blur.redline.R
 import tech.blur.redline.core.MvpBottomSheetDialogFragment
 import tech.blur.redline.core.model.Route
-import tech.blur.redline.core.model.User
+import tech.blur.redline.features.showplaces.ShowplaceFragment
 
-class BottomNavigationDrawerFragment : MvpBottomSheetDialogFragment() {
+class BottomNavigationDrawerFragment : MvpBottomSheetDialogFragment(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var route: Route
     lateinit var naviigationView: NavigationView
@@ -32,6 +34,7 @@ class BottomNavigationDrawerFragment : MvpBottomSheetDialogFragment() {
 
         naviigationView = view.navigation_view
 
+        naviigationView.setNavigationItemSelectedListener(this)
         val bundle = this.arguments
         if (bundle != null) {
             val jsonString = bundle.getString("Route")
@@ -82,10 +85,23 @@ class BottomNavigationDrawerFragment : MvpBottomSheetDialogFragment() {
         return dialog
     }
 
-    fun addRouteToNavDrawer(){
+    fun addRouteToNavDrawer() {
         route.geos.forEach {
             naviigationView.menu.add(it.name)
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        route.geos.forEach {
+            if (it.name == item.title) {
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container, ShowplaceFragment.newInstance(it))
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+
+        return true
     }
 
     private fun disableNavigationViewScrollbars(navigationView: NavigationView?) {
