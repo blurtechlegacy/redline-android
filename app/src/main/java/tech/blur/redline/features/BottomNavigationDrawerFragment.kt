@@ -13,7 +13,7 @@ import com.google.android.material.internal.NavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.*
 import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.view.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.fragment_mainflow.view.*
 import tech.blur.redline.core.MvpBottomSheetDialogFragment
 import tech.blur.redline.R
 
