@@ -3,7 +3,7 @@ package tech.blur.redline.features
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.fragment_mainflow.view.*
 import tech.blur.redline.App
 import tech.blur.redline.R
 import tech.blur.redline.core.PreferencesApi
@@ -68,7 +68,7 @@ class MainFlowFragment : BaseFragment() {
         return true
     }
 
-    override fun getLayoutID(): Int = R.layout.fragment_main
+    override fun getLayoutID(): Int = R.layout.fragment_mainflow
 
     private fun getContainerID(): Int = R.id.flow_container
 

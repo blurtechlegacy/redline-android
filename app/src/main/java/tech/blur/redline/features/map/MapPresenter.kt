@@ -92,7 +92,7 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
                 pointArray[0].geo[1]
             )
         )
-        apiRequest.mode(TravelMode.WALKING) //set travelling mode
+        apiRequest.mode(TravelMode.WALKING)
 
         apiRequest.setCallback(object : PendingResult.Callback<DirectionsResult> {
             override fun onFailure(e: Throwable?) {
