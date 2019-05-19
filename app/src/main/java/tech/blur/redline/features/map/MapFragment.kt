@@ -27,6 +27,7 @@ import com.google.maps.model.DirectionsResult
 import kotlinx.android.synthetic.main.fragment_map.view.*
 import tech.blur.redline.R
 import tech.blur.redline.core.model.Route
+import tech.blur.redline.core.model.Showplace
 import tech.blur.redline.features.BaseFragment
 import java.util.*
 import kotlin.collections.ArrayList
@@ -104,7 +105,6 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
                 init = true
                 presenter.downloadRoutes()
             }
-            //System.out.println(addresses[0].locality)
         }
     }
 
@@ -165,7 +165,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     }
 
     private fun getCurrentLocation() {
-        googleMap.clear()
+        //googleMap.clear()
         if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -194,6 +194,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     }
 
     override fun setRoutsChip(list: ArrayList<Route>) {
+
         list.forEach {
             val chip = Chip(routeChips.context)
             chip.text = it.name
@@ -207,13 +208,17 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
             run {
                 if (checkedId > 0) {
                     selectedChip = checkedId
-                    presenter.buildRoute(checkedId - 1)
-                } else{
+                    presenter.buildRoute(routeChips.findViewById<Chip>(checkedId).text.toString())
+                } else {
                     googleMap.clear()
                 }
             }
         }
 
+    }
+
+    override fun showMessage(s: String) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -247,12 +252,26 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         googleMap.clear()
     }
 
-    override fun addPolyline(results: DirectionsResult, dest: LatLng) {
+    override fun addPolyline(results: DirectionsResult, showplace: Showplace) {
 
         val mainHandler = Handler(context!!.mainLooper)
 
         mainHandler.post {
-            googleMap.addMarker(MarkerOptions().position(dest).draggable(false))
+            val marker = googleMap.addMarker(
+                MarkerOptions()
+                    .position(
+                        LatLng(
+                            showplace.geo[0],
+                            showplace.geo[1]
+                        )
+                    )
+                    .draggable(false)
+                    .title(showplace.name)
+                    .snippet(showplace.description)
+            )
+
+
+
             val decodedPath = PolyUtil.decode(results.routes[0].overviewPolyline.encodedPath)
             val p = PolylineOptions()
                 .addAll(decodedPath)
@@ -279,7 +298,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        Toast.makeText(context, "onMarkerClick", Toast.LENGTH_SHORT).show()
+        marker.showInfoWindow()
         return true
     }
 
