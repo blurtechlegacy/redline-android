@@ -308,6 +308,10 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         return true
     }
 
+    fun buildCustomRoute() {
+        presenter.buildCustomRoute()
+    }
+
     companion object {
         fun newInstance() = MapFragment()
     }

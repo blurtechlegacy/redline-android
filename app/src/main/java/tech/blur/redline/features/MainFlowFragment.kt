@@ -3,8 +3,7 @@ package tech.blur.redline.features
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
-import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.fragment_bottom_nav_drawer.view.*
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_mainflow.view.*
 import tech.blur.redline.App
 import tech.blur.redline.R
@@ -31,7 +30,12 @@ class MainFlowFragment : BaseFragment() {
         val view = inflater.inflate(getLayoutID(), container, false)
         setHasOptionsMenu(true)
 
-
+        view.fab_run.setOnClickListener {
+            if (PreferencesApi.getUser(prefs) != null)
+                (childFragmentManager.findFragmentById(R.id.flow_container) as MapFragment).buildCustomRoute()
+            else
+                Toast.makeText(context, "Вы должны войти", Toast.LENGTH_SHORT).show()
+        }
 
         (activity as MainActivity).setSupportActionBar(view.bottom_app_bar)
 
@@ -75,7 +79,7 @@ class MainFlowFragment : BaseFragment() {
         return true
     }
 
-    private fun createBottomFragment(){
+    private fun createBottomFragment() {
         val bottomNavDrawerFragment = BottomNavigationDrawerFragment.newInstance(route)
         bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
     }

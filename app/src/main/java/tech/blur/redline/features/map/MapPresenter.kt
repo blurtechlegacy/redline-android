@@ -1,5 +1,6 @@
 package tech.blur.redline.features.map
 
+import android.content.SharedPreferences
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.common.api.GoogleApiClient
@@ -14,6 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import tech.blur.redline.App
+import tech.blur.redline.core.PreferencesApi
+import tech.blur.redline.core.model.CustomRouteRequestBody
 import tech.blur.redline.core.model.Route
 import tech.blur.redline.core.model.Showplace
 import tech.blur.redline.core.model.Wrapper
@@ -28,7 +31,12 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
     var longitude: Double = 0.0
     var latitude: Double = 0.0
 
+    @Inject
+    lateinit var prefs: SharedPreferences
+
     lateinit var pointArray: ArrayList<Route>
+
+    lateinit var customPointArray: ArrayList<Showplace>
 
     lateinit var googleApiClient: GoogleApiClient
     lateinit var geoApiContext: GeoApiContext
@@ -56,6 +64,32 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
                 if (response.body() != null) {
                     pointArray = response.body()!!.data
                     viewState.setRoutsChip(pointArray)
+                }
+            }
+
+        })
+    }
+
+    fun buildCustomRoute() {
+        routeApi.getCustomRoute(
+            CustomRouteRequestBody(
+                city,
+                LatLng(latitude, longitude),
+                PreferencesApi.getUser(prefs)!!._id
+            )
+        ).enqueue(object : Callback<Wrapper<ArrayList<Showplace>>> {
+            override fun onFailure(call: Call<Wrapper<ArrayList<Showplace>>>, t: Throwable) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onResponse(
+                call: Call<Wrapper<ArrayList<Showplace>>>,
+                response: Response<Wrapper<ArrayList<Showplace>>>
+            ) {
+                if (response.body() != null) {
+                    customPointArray = response.body()!!.data
+                    getRoute(customPointArray, LatLng(latitude, longitude))
+                    viewState.sendRoute((Route("123", "Свой маршрут", customPointArray)))
                 }
             }
 
