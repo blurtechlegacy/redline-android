@@ -24,7 +24,7 @@ class PreferencesApi {
             prefs.edit().putString(Companion.PrefNames.USER.name, json).apply()
         }
 
-        fun getUser(prefs: SharedPreferences): User {
+        fun getUser(prefs: SharedPreferences): User? {
             val gson = Gson()
             val jsonRoot = JSONObject(prefs.getString(Companion.PrefNames.USER.name, null))
 

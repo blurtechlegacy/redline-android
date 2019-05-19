@@ -87,21 +87,6 @@
                     android:hint="Логин"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textinput_profile_password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp">
-            <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_profile_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Пароль"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
         <TextView
                 android:text="Ваши предпотения:"
                 android:layout_marginStart="8dp"

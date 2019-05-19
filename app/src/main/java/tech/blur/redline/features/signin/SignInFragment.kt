@@ -52,7 +52,7 @@ class SignInFragment : BaseFragment(), SignInView {
     }
 
     override fun onUserAuthDone() {
-        Toast.makeText(context, "asdasd", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Auth done", Toast.LENGTH_SHORT).show()
         //activity!!.supportFragmentManager.popBackStack()
     }
 
