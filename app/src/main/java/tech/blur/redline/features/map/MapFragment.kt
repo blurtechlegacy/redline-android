@@ -29,6 +29,7 @@ import tech.blur.redline.R
 import tech.blur.redline.core.model.Route
 import tech.blur.redline.core.model.Showplace
 import tech.blur.redline.features.BaseFragment
+import tech.blur.redline.features.MainFlowFragment
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -281,6 +282,10 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         }
     }
 
+    override fun sendRoute(route: Route) {
+        (parentFragment as MainFlowFragment).route = route
+    }
+
     override fun onMarkerDragStart(marker: Marker) {
         Toast.makeText(context, "onMarkerDragStart", Toast.LENGTH_SHORT).show()
     }
@@ -296,6 +301,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
         moveMap()
     }
+
 
     override fun onMarkerClick(marker: Marker): Boolean {
         marker.showInfoWindow()
