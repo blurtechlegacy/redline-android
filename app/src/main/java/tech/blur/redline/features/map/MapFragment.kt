@@ -18,10 +18,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.maps.GeoApiContext
@@ -105,7 +102,10 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         val addresses = gcd.getFromLocation(presenter.latitude, presenter.longitude, 1)
         if (addresses.size > 0) {
             presenter.city = addresses[0].locality
-            if (!init) presenter.downloadRoutes()
+            if (!init) {
+                init = true
+                presenter.downloadRoutes()
+            }
             //System.out.println(addresses[0].locality)
         }
     }
@@ -157,8 +157,10 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
          */
         val latLng = LatLng(presenter.latitude, presenter.longitude)
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(18f))
+        val cameraPosition = CameraPosition.Builder().target(latLng).zoom(15f).build()
+
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         googleMap.uiSettings.isZoomControlsEnabled = true
 
 
