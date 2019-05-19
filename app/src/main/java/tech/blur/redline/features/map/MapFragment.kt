@@ -193,6 +193,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     }
 
     override fun setRoutsChip(list: ArrayList<Route>) {
+
         list.forEach {
             val chip = Chip(routeChips.context)
             chip.text = it.name
@@ -206,13 +207,17 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
             run {
                 if (checkedId > 0) {
                     selectedChip = checkedId
-                    presenter.buildRoute(checkedId - 1)
-                } else{
+                    presenter.buildRoute(routeChips.findViewById<Chip>(checkedId).text.toString())
+                } else {
                     googleMap.clear()
                 }
             }
         }
 
+    }
+
+    override fun showMessage(s: String) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show()
     }
 
     override fun onMyLocationButtonClick(): Boolean {

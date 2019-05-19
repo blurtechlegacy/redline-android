@@ -66,6 +66,22 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
         getRoute(pointArray[id].geos, LatLng(latitude, longitude))
     }
 
+    fun buildRoute(name: String) {
+        val pos = searchRoute(name)
+        if (pos != -1)
+            getRoute(pointArray[pos].geos, LatLng(latitude, longitude))
+        else
+            viewState.showMessage("Ошибка маршрута")
+    }
+
+    private fun searchRoute(name: String): Int {
+        pointArray.forEach {
+            if (it.name == name) return pointArray.indexOf(it)
+        }
+
+        return -1
+    }
+
     private fun getRoute(pointArray: ArrayList<Showplace>, origin: LatLng) {
         val apiRequest = DirectionsApi.newRequest(geoApiContext)
 

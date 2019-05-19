@@ -8,4 +8,5 @@ import tech.blur.redline.core.model.Route
 interface MapFragmentView: MvpView {
     fun addPolyline(result: DirectionsResult, latLng: LatLng)
     fun setRoutsChip(list: ArrayList<Route>)
+    fun showMessage(s: String)
 }
