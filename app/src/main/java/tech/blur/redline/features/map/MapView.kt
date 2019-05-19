@@ -10,4 +10,5 @@ interface MapFragmentView: MvpView {
     fun addPolyline(result: DirectionsResult, showplace: Showplace)
     fun setRoutsChip(list: ArrayList<Route>)
     fun showMessage(s: String)
+    fun sendRoute(route: Route)
 }

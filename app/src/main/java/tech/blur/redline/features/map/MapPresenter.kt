@@ -68,9 +68,10 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
 
     fun buildRoute(name: String) {
         val pos = searchRoute(name)
-        if (pos != -1)
+        if (pos != -1) {
             getRoute(pointArray[pos].geos, LatLng(latitude, longitude))
-        else
+            sendRoute(pos)
+        } else
             viewState.showMessage("Ошибка маршрута")
     }
 
@@ -145,6 +146,11 @@ class MapPresenter : MvpPresenter<MapFragmentView>() {
             }
 
         })
+    }
+
+
+    private fun sendRoute(id: Int) {
+        viewState.sendRoute(pointArray[id])
     }
 
 
